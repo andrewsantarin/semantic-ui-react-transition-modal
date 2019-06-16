@@ -81,4 +81,4 @@ export function App() {
 
 ## Resources
 - Source of inspiration: [https://stackoverflow.com/questions/55063139/why-react-semantic-ui-transition-not-animating-the-component](https://stackoverflow.com/questions/55063139/why-react-semantic-ui-transition-not-animating-the-component)
-- Semantic UI React issue: [[this issue](https://github.com/Semantic-Org/Semantic-UI-React/issues/2923)](https://github.com/Semantic-Org/Semantic-UI-React/issues/2923)
+- Semantic UI React issue: [https://github.com/Semantic-Org/Semantic-UI-React/issues/2923](https://github.com/Semantic-Org/Semantic-UI-React/issues/2923)
