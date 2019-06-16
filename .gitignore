@@ -1,0 +1,18 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+example/src/semantic-ui-react-transition-modal
+
+# production
+build
+dist
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.rpt2_cache
+
+# npm
+**/*.tar.gz
+**/*.tgz
