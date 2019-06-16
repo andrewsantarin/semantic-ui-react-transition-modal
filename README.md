@@ -8,7 +8,7 @@ A simple animation wrapper over the Semantic UI React modal component.
 - [Resources](#Resources)
 
 ## Premise
-Without an official modal animation feature in stone by Semantic UI React (see [this issue](https://github.com/Semantic-Org/Semantic-UI-React/issues/2923)), one has to make workarounds. This library aims to fill that in by merging the animation props of the `<Transition>` component and the visibility state control props of the `<Modal>` component into one convenient set.
+Without an official modal animation feature set in stone by Semantic UI React (see [this issue](https://github.com/Semantic-Org/Semantic-UI-React/issues/2923)), one has to make workarounds. This library aims to fill that in by merging the animation props of the `<Transition>` component and the visibility state control props of the `<Modal>` component into one convenient set.
 
 ## Usage
 
