@@ -28,7 +28,12 @@ yarn add semantic-ui-react
 yarn add semantic-ui-react-transition-modal
 ```
 
-The component puts a `<Transition>` on top of `<Modal>` in order
+Simply import `TransitionModal` in order to use it. It also comes prepackaged with the usual `Modal` subcomponents, with no modifications, so you can use them as you usually do:
+
+- `TransitionModal.Header`
+- `TransitionModal.Content`
+- `TransitionModal.Description`
+- `TransitionModal.Actions`
 
 **Example**
 ```jsx
