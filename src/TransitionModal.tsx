@@ -1,7 +1,6 @@
 import React, { cloneElement, isValidElement, Fragment } from 'react';
 import { Transition, Modal, StrictModalProps, StrictTransitionProps } from 'semantic-ui-react';
 
-
 import { AutoControlledComponent, createAutoControlledComponentStateManagement } from './AutoControlledComponent';
 import { safeInvoke } from './utils';
 
@@ -12,7 +11,7 @@ import { safeInvoke } from './utils';
 // 3. Extract them for assignment to the transition component.
 
 
-type WrappingTransitionProps = Omit<StrictTransitionProps, 'visible' | 'children'>;
+type WrappingTransitionProps = Omit<StrictTransitionProps, 'visible' | 'children' | 'unmountOnHide'>;
 type AnyProps = {
   [key: string]: any;
 };
