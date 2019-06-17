@@ -4,9 +4,30 @@ import commonjs from 'rollup-plugin-commonjs';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import nodeBuiltins from 'rollup-plugin-node-builtins';
+import { terser } from 'rollup-plugin-terser';
 
 import pkg from './package.json';
 
+
+const production = !process.env.ROLLUP_WATCH;
+
+if (!production) {
+  console.log('------');
+  console.log('DEVELOPMENT BUILD');
+  console.log('You are generating an unminified output of this library.');
+  console.log('Remember to minify the output by running the following:');
+  console.log('');
+  console.log('yarn build');
+  console.log('');
+  console.log('------');
+} else {
+  console.log('------');
+  console.log('PRODUCTION BUILD');
+  console.log('You are generating a minified output of this library.');
+  console.log('Remember to test the code before publishing it to the NPM registry.');
+  console.log('');
+  console.log('------');
+}
 
 export default {
   input: 'src/index.tsx',
@@ -19,13 +40,22 @@ export default {
     },
     {
       file: pkg.module,
-      format: 'es',
+      format: 'esm',
       exports: 'named',
       sourcemap: true,
     },
     {
+      name: 'semanticUIReactTransitionModal',
+      file: pkg.browser,
+      format: 'umd',
+      globals: {
+        react: 'React',
+        'semantic-ui-react': 'semanticUIReact',
+      },
+    },
+    {
       file: 'example/src/semantic-ui-react-transition-modal/index.js',
-      format: 'es',
+      format: 'esm',
       banner: '/* eslint-disable */',
     },
   ],
@@ -58,5 +88,6 @@ export default {
     typescript({
       typescript: require('typescript'),
     }),
+    production && terser(),
   ],
 };
