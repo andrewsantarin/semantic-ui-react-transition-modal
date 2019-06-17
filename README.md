@@ -87,3 +87,6 @@ export function App() {
 ## Resources
 - Source of inspiration: [https://stackoverflow.com/questions/55063139/why-react-semantic-ui-transition-not-animating-the-component](https://stackoverflow.com/questions/55063139/why-react-semantic-ui-transition-not-animating-the-component)
 - Semantic UI React issue: [https://github.com/Semantic-Org/Semantic-UI-React/issues/2923](https://github.com/Semantic-Org/Semantic-UI-React/issues/2923)
+- Boilerplate: [https://github.com/michal-wrzosek/react-component-lib](https://github.com/michal-wrzosek/react-component-lib)
+- UMD enhancements: [https://github.com/alex996/react-css-spinners/blob/6e9eaae8052ce899250cc9d765f1e95b7d75f7b0/rollup.config.js](https://github.com/alex996/react-css-spinners/blob/6e9eaae8052ce899250cc9d765f1e95b7d75f7b0/rollup.config.js)
+  - YouTube tutorial of it: [https://www.youtube.com/watch?v=ZGa_a164aeM](https://www.youtube.com/watch?v=ZGa_a164aeM)
