@@ -74,14 +74,14 @@
     "lint": "tslint -c tslint.json 'src/**/*'",
     "build": "rollup -c",
     "build-watch": "rollup -c -w",
-    "install-all": "npm i && cd example && yarn && cd ..",
-    "start-example": "cd example && npm start",
-    "deploy-example": "cd example && npm run deploy",
-    "develop": "concurrently --kill-others \"npm run build-watch\" \"npm run start-example\"",
+    "install-all": "yarn && cd example && yarn && cd ..",
+    "start-example": "cd example && yarn start",
+    "deploy-example": "cd example && yarn deploy",
+    "develop": "concurrently --kill-others \"yarn build-watch\" \"yarn start-example\"",
     "test": "jest --verbose ./src",
-    "prepare": "npm run build",
-    "pretest": "npm run build",
-    "prepublishOnly": "npm run build && npm run test"
+    "prepare": "yarn build",
+    "pretest": "yarn build",
+    "prepublishOnly": "yarn build && yarn test"
   },
   "jest": {
     "modulePathIgnorePatterns": [
