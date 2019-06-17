@@ -28,6 +28,8 @@ yarn add semantic-ui-react
 yarn add semantic-ui-react-transition-modal
 ```
 
+This library was written in TypeScript. So, typings have already been provided. No further installation is required on your end.
+
 Simply import `TransitionModal` in order to use it. It also comes prepackaged with the usual `Modal` subcomponents, with no modifications, so you can use them as you usually do:
 
 - `TransitionModal.Header`
