@@ -44,7 +44,7 @@ function setTransformOrigin(node: any, value: string) {
 
 export const toPxString = function toPxString(value: number) {
   return `${value}px`;
-}
+};
 // #endregion
 
 
@@ -149,11 +149,11 @@ export class TransitionModal extends AutoControlledComponent<AnyProps & Transiti
       // FIXME:
       // I can't use setState here because it rerenders the modal.
       // It would be nice to have this on the state, though.
-      const { animation, mousePositionOnOpen } = this.props;
+      const { animation, zoomFromMousePositionOnOpen } = this.props;
       const isZoom = animation === 'zoom';
       const modal = this.modal.current;
 
-      if (!modal || !(mousePositionOnOpen && isZoom)) {
+      if (!modal || !(zoomFromMousePositionOnOpen && isZoom)) {
         return;
       }
 
