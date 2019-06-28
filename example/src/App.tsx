@@ -8,7 +8,7 @@ import './App.css';
 import 'semantic-ui-css/semantic.min.css';
 
 export const App: React.FC = () => {
-  const animation: SemanticTRANSITIONS = 'fade up';
+  const animation: SemanticTRANSITIONS = 'zoom';
 
   return (
     <div className="App">
@@ -17,6 +17,7 @@ export const App: React.FC = () => {
         <TransitionModal
           animation={animation}
           duration={250}
+          zoomFromMousePositionOnOpen
           trigger={(
             <Button
               content="Hello!"
