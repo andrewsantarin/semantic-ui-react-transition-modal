@@ -1,5 +1,5 @@
 export {
   TransitionModalProps,
   TransitionModalState,
-  TransitionModal,
+  TransitionModal
 } from './TransitionModal';

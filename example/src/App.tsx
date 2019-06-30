@@ -13,6 +13,22 @@ export const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
+        <TransitionModal
+          animation={animation}
+          duration={250}
+          zoomFromMousePositionOnOpen
+          trigger={(
+            <Button
+              content="Hello!"
+            />
+          )}
+          closeIcon
+          content="Hello!"
+          header="Hello!"
+          actions={[
+            'OK',
+          ]}
+        />
         <img src={logo} className="App-logo" alt="logo" />
         <TransitionModal
           animation={animation}

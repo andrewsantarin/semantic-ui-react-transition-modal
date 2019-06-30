@@ -1,36 +1,16 @@
-import typescript from 'rollup-plugin-typescript2';
-import json from 'rollup-plugin-json';
-import commonjs from 'rollup-plugin-commonjs';
-import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-import nodeResolve from 'rollup-plugin-node-resolve';
-import nodeBuiltins from 'rollup-plugin-node-builtins';
-import { terser } from 'rollup-plugin-terser';
+import babel from "rollup-plugin-babel";
+import commonjs from "rollup-plugin-commonjs";
+import nodeResolve from "rollup-plugin-node-resolve";
+import peerDepsExternal from "rollup-plugin-peer-deps-external";
+import { sizeSnapshot } from "rollup-plugin-size-snapshot";
+import sourcemaps from "rollup-plugin-sourcemaps";
+import typescript from "rollup-plugin-typescript2";
 
-import pkg from './package.json';
+import pkg from "./package.json";
 
-
-const production = !process.env.ROLLUP_WATCH;
-
-if (!production) {
-  console.log('------');
-  console.log('DEVELOPMENT BUILD');
-  console.log('You are generating an unminified output of this library.');
-  console.log('Remember to minify the output by running the following:');
-  console.log('');
-  console.log('yarn build');
-  console.log('');
-  console.log('------');
-} else {
-  console.log('------');
-  console.log('PRODUCTION BUILD');
-  console.log('You are generating a minified output of this library.');
-  console.log('Remember to test the code before publishing it to the NPM registry.');
-  console.log('');
-  console.log('------');
-}
 
 export default {
-  input: 'src/index.tsx',
+  input: "src/index.ts",
   output: [
     {
       file: pkg.main,
@@ -40,14 +20,14 @@ export default {
     },
     {
       file: pkg.module,
-      format: 'esm',
+      format: 'es',
       exports: 'named',
       sourcemap: true,
     },
     {
-      name: 'semanticUIReactTransitionModal',
-      file: pkg.browser,
+      file: pkg.umd,
       format: 'umd',
+      name: 'semanticUIReactTransitionModal',
       globals: {
         react: 'React',
         'semantic-ui-react': 'semanticUIReact',
@@ -55,19 +35,21 @@ export default {
     },
     {
       file: 'example/src/semantic-ui-react-transition-modal/index.js',
-      format: 'esm',
+      format: 'es',
       banner: '/* eslint-disable */',
     },
   ],
   external: Object.keys(pkg.peerDependencies || {}),
   plugins: [
     peerDepsExternal(),
-    nodeBuiltins(),
     nodeResolve(),
+    typescript(),
+    babel({
+      exclude: "node_modules/**",
+      plugins: ["external-helpers"]
+    }),
     commonjs({
-      include: [
-        'node_modules/**',
-      ],
+      include: ["node_modules/**"],
       namedExports: {
         'node_modules/react/react.js': [
           'Children',
@@ -84,10 +66,7 @@ export default {
         ],
       },
     }),
-    json(),
-    typescript({
-      typescript: require('typescript'),
-    }),
-    production && terser(),
-  ],
+    sourcemaps(),
+    sizeSnapshot()
+  ]
 };

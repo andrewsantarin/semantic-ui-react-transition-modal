@@ -1,0 +1,40 @@
+{
+  "dist/index.cjs.js": {
+    "bundled": 83079,
+    "minified": 31954,
+    "gzipped": 8717
+  },
+  "dist/index.umd.js": {
+    "bundled": 91751,
+    "minified": 24086,
+    "gzipped": 7623
+  },
+  "dist/index.esm.js": {
+    "bundled": 82673,
+    "minified": 31594,
+    "gzipped": 8681,
+    "treeshaked": {
+      "rollup": {
+        "code": 12929,
+        "import_statements": 162
+      },
+      "webpack": {
+        "code": 14866
+      }
+    }
+  },
+  "example/src/semantic-ui-react-transition-modal/index.js": {
+    "bundled": 82694,
+    "minified": 31594,
+    "gzipped": 8681,
+    "treeshaked": {
+      "rollup": {
+        "code": 12929,
+        "import_statements": 162
+      },
+      "webpack": {
+        "code": 14866
+      }
+    }
+  }
+}

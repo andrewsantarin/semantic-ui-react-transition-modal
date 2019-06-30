@@ -1,79 +1,35 @@
-import React, { cloneElement, isValidElement, Fragment, createRef, Component, RefObject } from 'react';
-import { Transition, Modal, ModalProps, StrictModalProps, StrictTransitionProps } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import React, { Component, Fragment, createRef, isValidElement, cloneElement } from 'react';
+import { AutoControlledManager } from 'react-auto-controlled';
+import { Modal, ModalProps, StrictTransitionProps, StrictModalProps, Transition } from 'semantic-ui-react';
 
-import { AutoControlledComponent, createAutoControlledComponentStateManagement } from './AutoControlledComponent';
-import { safeInvoke } from './utils';
-
-
-// TODO:
-// Figure out whether these functions should be expanded upon.
-// #region Shamelessly copied from 'rc-dialog'
-function getScroll(w: any, top?: boolean) {
-  let ret = w[`page${top ? 'Y' : 'X'}Offset`];
-  const method = `scroll${top ? 'Top' : 'Left'}`;
-  if (typeof ret !== 'number') {
-    const d = w.document;
-    ret = d.documentElement[method];
-    if (typeof ret !== 'number') {
-      ret = d.body[method];
-    }
-  }
-  return ret;
-}
-
-function offset(el: any) {
-  const rect = el.getBoundingClientRect();
-  const pos = {
-    left: rect.left,
-    top: rect.top,
-  };
-  const doc = el.ownerDocument;
-  const w = doc.defaultView || doc.parentWindow;
-  pos.left += getScroll(w);
-  pos.top += getScroll(w, true);
-  return pos;
-}
-
-function setTransformOrigin(node: any, value: string) {
-  const style = node.style;
-  ['Webkit', 'Moz', 'Ms', 'ms'].forEach((prefix: string) => {
-    style[`${prefix}TransformOrigin`] = value;
-  });
-  style[`transformOrigin`] = value;
-}
-
-export const toPxString = function toPxString(value: number) {
-  return `${value}px`;
-};
-// #endregion
-
-
-// TODO: 
-// 1. Figure out which transition props this component won't use.
-// 2. Isolate them from everything: defaultProps, propTypes, etc.
-// 3. Extract them for assignment to the transition component.
-// 4. Zoom from source of click. 
+import { AnyObject, Point } from './types';
+import { offset, setTransformOrigin, toPxString, safeInvoke } from './utils';
 
 
 type WrappingTransitionProps = Omit<StrictTransitionProps, 'visible' | 'children' | 'unmountOnHide'>;
-type AnyProps = {
-  [key: string]: any;
-};
-
-export interface TransitionModalState extends Pick<StrictModalProps, 'open'> {}
-export interface TransitionModalProps extends WrappingTransitionProps, StrictModalProps {
+type TransitionModalCustomProps = {
   /**
    * Controls whether or not the modal animates starting from the mouse click position when it opens.
    * 
-   * **Note:** This animation will only work when `animation` has been set to `'zoom'`.
+   * **Note:**
+   * 
+   * 1. This animation will only work when `animation` has been set to `'zoom'`.
+   * 2. Setting this prop to `true` will override 
    *
    * @type {boolean}
-   * @memberof TransitionModalProps
+   * @memberof TransitionModalCustomProps
    */
   zoomFromMousePositionOnOpen?: boolean;
-}
+};
 
-const TransitionModalAutoControlledComponentStateManagement = createAutoControlledComponentStateManagement<TransitionModalProps, TransitionModalState>(
+export interface TransitionModalProps extends WrappingTransitionProps, StrictModalProps, TransitionModalCustomProps { }
+export interface TransitionModalState extends Pick<StrictModalProps, 'open'> { }
+
+// I'm going against the grain of semantic-ui-react by abandoning auto-controlled component superclass inheritance.
+// This is deliberate. I'd rather not suffer the mistake of the end user modifying the static `.autoControlledProps`
+// of a component class, which could prevent the modal component from closing and opening!
+export const transitionModalAutoControlledManager = new AutoControlledManager<TransitionModalState, TransitionModalProps>(
   [
     'open',
   ],
@@ -86,89 +42,74 @@ const TransitionModalAutoControlledComponentStateManagement = createAutoControll
   }
 );
 
-export class TransitionModal extends AutoControlledComponent<AnyProps & TransitionModalProps, TransitionModalState> {
-  static defaultProps = Object.assign(
-    {},
-    Transition.defaultProps,
-    Modal.defaultProps
-  );
+export class TransitionModal extends Component<TransitionModalProps & AnyObject, TransitionModalState> {
+  // Infer the default props from the subcomponents.
+  static defaultProps = {
+    ...Transition.defaultProps,
+    ...Modal.defaultProps,
+  };
 
-  static propTypes = Object.assign(
-    {},
-    Transition.propTypes,
-    Modal.propTypes
-  );
+  // Infer the prop types from the subcomponents.
+  static propTypes = {
+    ...Transition.propTypes,
+    ...Modal.propTypes,
+    zoomFromMousePositionOnOpen: PropTypes.bool, // Unique to this component.
+  };
 
-  // Export these components from the original component.
+  // Export these components from the original component so that there's no need to import <Modal>.
   static Header = Modal.Header;
   static Content = Modal.Content;
   static Description = Modal.Description;
   static Actions = Modal.Actions;
 
-  modal: RefObject<Component<ModalProps, any, any>> = createRef<Component<ModalProps, any, any>>();
+  static getDerivedStateFromProps = transitionModalAutoControlledManager.getDerivedStateFromProps;
 
-  constructor(props: TransitionModalProps) {
-    super(props);
+  modal = createRef<Component<ModalProps, any, any>>();
+  state = transitionModalAutoControlledManager.getInitialAutoControlledStateFromProps(this.props);
 
-    const state = TransitionModalAutoControlledComponentStateManagement.getInitialAutoControlledStateFromProps(props);
+  public trySetState = transitionModalAutoControlledManager.trySetState;
 
-    this.state = state;
-  }
+  public applyTransformOriginToModal = (point: Point) => () => {
+    // Hit the DOM because `.setState()` can't be used. Here are a few reasons:
+    //
+    // 1. The modal will only mount when this wrapper renders in response to the `.open` state change.
+    //    It can't be found in ref before the change. It's needed to find the necessary positionings.
+    //
+    // 2. Using `getDerivedStateFromProps` is useless because `static` prevents `this` from being used.
+    //    The modal still needs to wait after the wrapper has rerender been mounted, anyway.
+    //
+    // 3. Calling `.setState()` again causes the modal to close itself. I don't know why yet.
+    const { animation, zoomFromMousePositionOnOpen } = this.props;
+    const isZoom = animation === 'zoom';
+    const modal = this.modal.current;
 
-  static getDerivedStateFromProps = TransitionModalAutoControlledComponentStateManagement.getDerivedStateFromProps;
-
-  /**
-   * Safely attempt to set state for props that might be controlled by the user.
-   * Second argument is a state object that is always passed to setState.
-   * @param {object} maybeState State that corresponds to controlled props.
-   * @param {object} [state] Actual state, useful when you also need to setState.
-   * @param {object} callback Callback which is called after setState applied.
-   */
-  trySetState = (maybeState: Partial<TransitionModalState>, callback?: () => void) => {
-    const newState = Object.keys(maybeState).reduce((acc, prop) => {
-      // ignore props defined by the parent
-      if (this.props[prop] !== undefined) return acc;
-
-      acc[prop] = maybeState[prop];
-      return acc;
-    }, {});
-
-    if (Object.keys(newState).length === 0) {
+    if (!modal || !(zoomFromMousePositionOnOpen && isZoom)) {
       return;
     }
 
-    this.setState(newState, callback);
+    const dialog = (modal as any).ref.current;
+    const dialogOffset = offset(dialog);
+    const transformOrigin = {
+      x: point.x - dialogOffset.left,
+      y: point.y - dialogOffset.top,
+    };
+
+    const transformOriginStr = `${toPxString(transformOrigin.x)} ${toPxString(transformOrigin.y)}`;
+    setTransformOrigin(dialog, transformOriginStr);
   }
 
-  private handleOpen: StrictModalProps['onOpen'] = (event, data) => {
-    const { clientX, clientY } = event;
-    safeInvoke(this.props.onOpen, event, data);
+  private handleOpen: StrictModalProps['onOpen'] = (event) => {
+    safeInvoke(this.props.onOpen, event, this.props);
     this.trySetState({
       open: true,
-    }, () => {
-      // FIXME:
-      // I can't use setState here because it rerenders the modal.
-      // It would be nice to have this on the state, though.
-      const { animation, zoomFromMousePositionOnOpen } = this.props;
-      const isZoom = animation === 'zoom';
-      const modal = this.modal.current;
-
-      if (!modal || !(zoomFromMousePositionOnOpen && isZoom)) {
-        return;
-      }
-
-      const dialog = (modal as any).ref.current;
-      const dialogOffset = offset(dialog);
-      const transformOrigin = {
-        x: clientX - dialogOffset.left,
-        y: clientY - dialogOffset.top,
-      };
-      setTransformOrigin(dialog, `${toPxString(transformOrigin.x)} ${toPxString(transformOrigin.y)}`);
-    });
+    }, this.applyTransformOriginToModal({
+      x: event.clientX,
+      y: event.clientY,
+    }));
   }
 
-  private handleClose: StrictModalProps['onClose'] = (event, data) => {
-    safeInvoke(this.props.onClose, event, data);
+  private handleClose: StrictModalProps['onClose'] = (event) => {
+    safeInvoke(this.props.onClose, event, this.props);
     this.trySetState({
       open: false,
     });
@@ -187,16 +128,9 @@ export class TransitionModal extends AutoControlledComponent<AnyProps & Transiti
       zoomFromMousePositionOnOpen,  // For styling.
 
       // #region Transition component props
-      animation,
-      directional,
-      duration,
-      mountOnShow,
-      onComplete,
-      onHide,
-      onShow,
-      onStart,
-      reactKey,
-      transitionOnMount,
+      animation, directional, duration, mountOnShow,
+      onComplete, onHide, onShow, onStart,
+      reactKey, transitionOnMount,
       // #endregion
 
       ...modalProps
@@ -222,7 +156,7 @@ export class TransitionModal extends AutoControlledComponent<AnyProps & Transiti
         {trigger != null &&
           isValidElement(trigger) &&
           cloneElement(trigger, {
-            onClick: this.handleOpen,
+            onClick: this.handleOpen, // The trigger element should handle this event.
           })
         }
         <Transition

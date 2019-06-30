@@ -1,5 +1,7 @@
-// TODO: Write tests. Perhaps imitate semantic-ui-react's /test suite, if that was practical...
+import { TransitionModal } from './TransitionModal';
 
-
-// tslint:disable-next-line: no-default-export
-export default undefined;
+describe('TransitionModal', () => {
+  it('should be defined', () => {
+    expect(TransitionModal).toBeDefined();
+  });
+});
