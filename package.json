@@ -33,15 +33,15 @@
   "jsnext:main": "dist/index.esm.js",
   "umd": "dist/index.umd.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
-    "@babel/plugin-external-helpers": "^7.2.0",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/preset-stage-2": "^7.0.0",
     "@testing-library/react": "^8.0.4",
     "@types/jest": "^24.0.13",
     "@types/jsdom": "^12.2.4",
@@ -77,11 +77,12 @@
   "dependencies": {
     "lodash": "^4.17.11",
     "prop-types": "^15.7.2",
-    "react-auto-controlled": "^0.1.0-beta.8"
+    "react-auto-controlled": "^0.1.0-beta.9"
   },
   "peerDependencies": {
-    "react": "^16.8.6",
-    "semantic-ui-react": "^0.87.2"
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "semantic-ui-react": "^0.87.0"
   },
   "scripts": {
     "lint": "tslint -c tslint.json 'src/**/*'",
@@ -102,8 +103,5 @@
     ],
     "preset": "ts-jest",
     "testEnvironment": "node"
-  },
-  "files": [
-    "dist"
-  ]
+  }
 }

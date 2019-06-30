@@ -43,29 +43,13 @@ export default {
   plugins: [
     peerDepsExternal(),
     nodeResolve(),
-    typescript(),
     babel({
-      exclude: "node_modules/**",
-      plugins: ["external-helpers"]
+      exclude: "node_modules/**"
     }),
     commonjs({
-      include: ["node_modules/**"],
-      namedExports: {
-        'node_modules/react/react.js': [
-          'Children',
-          'Component',
-          'PropTypes',
-          'createElement',
-        ],
-        'node_modules/react-dom/index.js': [
-          'render',
-        ],
-        'node_modules/react-is/index.js': [
-          'isForwardRef',
-          'isValidElementType',
-        ],
-      },
+      include: ["node_modules/**"]
     }),
+    typescript(),
     sourcemaps(),
     sizeSnapshot()
   ]

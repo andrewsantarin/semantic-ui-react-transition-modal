@@ -1,39 +1,39 @@
 {
   "dist/index.cjs.js": {
-    "bundled": 83079,
-    "minified": 31954,
-    "gzipped": 8717
+    "bundled": 82997,
+    "minified": 31886,
+    "gzipped": 8709
   },
   "dist/index.umd.js": {
-    "bundled": 91751,
-    "minified": 24086,
-    "gzipped": 7623
+    "bundled": 91661,
+    "minified": 24048,
+    "gzipped": 7617
   },
   "dist/index.esm.js": {
-    "bundled": 82673,
-    "minified": 31594,
-    "gzipped": 8681,
+    "bundled": 82591,
+    "minified": 31526,
+    "gzipped": 8673,
     "treeshaked": {
       "rollup": {
-        "code": 12929,
+        "code": 12887,
         "import_statements": 162
       },
       "webpack": {
-        "code": 14866
+        "code": 14824
       }
     }
   },
   "example/src/semantic-ui-react-transition-modal/index.js": {
-    "bundled": 82694,
-    "minified": 31594,
-    "gzipped": 8681,
+    "bundled": 82612,
+    "minified": 31526,
+    "gzipped": 8673,
     "treeshaked": {
       "rollup": {
-        "code": 12929,
+        "code": 12887,
         "import_statements": 162
       },
       "webpack": {
-        "code": 14866
+        "code": 14824
       }
     }
   }
