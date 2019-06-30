@@ -1,2 +1,4 @@
 export { safeInvoke } from './safeInvoke';
-export { getScroll, offset, setTransformOrigin, toPxString } from './dom.utils';
+export { offset } from './offset';
+export { setTransformOrigin } from './setTransformOrigin';
+export { toPxString } from './toPxString';
