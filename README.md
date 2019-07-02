@@ -1,10 +1,11 @@
-# semantic-ui-react-transition-modal
+ # semantic-ui-react-transition-modal
 ## Semantic UI React Transition Modal
 A simple animation wrapper over the Semantic UI React modal component.
 
 - [Semantic UI React Transition Modal](#Semantic-UI-React-Transition-Modal)
 - [Premise](#Premise)
 - [Usage](#Usage)
+- [API](#API)
 - [Resources](#Resources)
 
 ## Premise
@@ -86,15 +87,15 @@ export function App() {
 ```
 
 ## API
-This library uses a combination of props from Semantic UI React's [`<Transition />`](https://react.semantic-ui.com/modules/transition/) and [`<Modal />`](https://react.semantic-ui.com/modules/modal/) components. Since this library is mostly just a simple wrapped component, the recommended way to understand the API is to refer to the official documentation.
+This library uses a combination of props from Semantic UI React's [`<Transition>`](https://react.semantic-ui.com/modules/transition/) and [`<Modal>`](https://react.semantic-ui.com/modules/modal/) components. Since this library is mostly just a simple wrapped component, the recommended way to understand the API is to refer to the official documentation.
 
 The only notable exception is the **exclusion** of some props which is necessary in order to make the `<TransitionModal />` component work:
 
 | Component        | Prop            | Reason to exclude                                                                                                                                                                                                                                                                                                                                                                                                                   |
 |------------------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `<Transition />` | `visible`       | The `<Modal />`'s `open` prop will provide the same functionality, making this prop redundant.                                                                                                                                                                                                                                                                                                                                      |
-| `<Transition />` | `unmountOnHide` | The `<Modal />`'s ability to close is influenced by the `<Transition />`'s ability to unmount the component within it when closed. If this prop was allowed to be set to `false`, the `<Modal />` will not be able to be closed once opened. There should be no risk here; `<Modal />` unmounts its contents the same way this library unmounts its `<Modal />`'s contents, so, the expected behavior should be roughly equivalent. |
-| `<Modal />`      | `open`          | Not quite an exclusion, but note that this prop will affect both the `visible` state of `<Transition />` and the `open` state of `<Modal />`.                                                                                                                                                                                                                                                                                       |
+| `<Transition>` | `visible`       | The `<Modal>`'s `open` prop will provide the same functionality, making this prop redundant.                                                                                                                                                                                                                                                                                                                                      |
+| `<Transition>` | `unmountOnHide` | The `<Modal>`'s ability to close is influenced by the `<Transition>`'s ability to unmount the component within it when closed. If this prop was allowed to be set to `false`, the `<Modal>` will not be able to be closed once opened. There should be no risk here; `<Modal>` unmounts its contents the same way this library unmounts its `<Modal>`'s contents, so, the expected behavior should be roughly equivalent. |
+| `<Modal>`      | `open`          | Not quite an exclusion, but note that this prop will affect both the `visible` state of `<Transition>` and the `open` state of `<Modal>`.                                                                                                                                                                                                                                                                                       |
 
 This library is controlled autonomously by its `open` prop if it has not been provided externally. You may use this component uncontrolled.
 
