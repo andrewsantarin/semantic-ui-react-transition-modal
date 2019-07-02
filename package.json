@@ -1,6 +1,6 @@
 {
   "name": "semantic-ui-react-transition-modal",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0-beta.2",
   "description": "A simple animation wrapper over the Semantic UI React modal component",
   "keywords": [
     "react",
