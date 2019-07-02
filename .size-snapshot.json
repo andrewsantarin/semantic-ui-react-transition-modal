@@ -1,16 +1,16 @@
 {
   "dist/index.cjs.js": {
-    "bundled": 82997,
+    "bundled": 80350,
     "minified": 31886,
     "gzipped": 8709
   },
   "dist/index.umd.js": {
-    "bundled": 91661,
+    "bundled": 88694,
     "minified": 24048,
     "gzipped": 7617
   },
   "dist/index.esm.js": {
-    "bundled": 82591,
+    "bundled": 79944,
     "minified": 31526,
     "gzipped": 8673,
     "treeshaked": {
@@ -24,7 +24,7 @@
     }
   },
   "example/src/semantic-ui-react-transition-modal/index.js": {
-    "bundled": 82612,
+    "bundled": 79965,
     "minified": 31526,
     "gzipped": 8673,
     "treeshaked": {

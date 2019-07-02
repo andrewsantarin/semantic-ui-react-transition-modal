@@ -4768,10 +4768,10 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-auto-controlled@^0.1.0-beta.9:
-  version "0.1.0-beta.9"
-  resolved "https://registry.yarnpkg.com/react-auto-controlled/-/react-auto-controlled-0.1.0-beta.9.tgz#06fa38222a5573606d9a57073b6f47567f1513d2"
-  integrity sha512-Gjz3rBh7ktHc9yWn371EchVAbPMVIzFugn/QRsPBfEn1FXphzH97G1X6+nxd2aVwncQLtlCAKH5S4nqCbih4zw==
+react-auto-controlled@^0.1.0-beta.12:
+  version "0.1.0-beta.12"
+  resolved "https://registry.yarnpkg.com/react-auto-controlled/-/react-auto-controlled-0.1.0-beta.12.tgz#02c3bb31fff7275dee9eef109fcf909451537be7"
+  integrity sha512-3tflAZm/XS8lf3Fgc/nNAvr3XUX0GUuqTa2/QrHqak9zdb+uagsrcjNX+OnQDv5KUHZA65Mb8s8/2Do0BporAA==
   dependencies:
     lodash "^4.17.11"
 
