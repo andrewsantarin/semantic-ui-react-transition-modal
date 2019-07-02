@@ -3,7 +3,7 @@ import React, { Component, Fragment, createRef, isValidElement, cloneElement } f
 import { AutoControlledManager } from 'react-auto-controlled';
 import { Modal, ModalProps, StrictTransitionProps, StrictModalProps, Transition } from 'semantic-ui-react';
 
-import { AnyObject, Point } from './types';
+import { AnyObject, Point2d } from './types';
 import { offset, setTransformOrigin, toPxString, safeInvoke } from './utils';
 
 
@@ -69,7 +69,7 @@ export class TransitionModal extends Component<TransitionModalProps & AnyObject,
 
   public trySetState = transitionModalAutoControlledManager.trySetState;
 
-  public applyTransformOriginToModal = (point: Point) => () => {
+  public applyTransformOriginToModal = (point: Point2d) => () => {
     // Hit the DOM because `.setState()` can't be used. Here are a few reasons:
     //
     // 1. The modal will only mount when this wrapper renders in response to the `.open` state change.
