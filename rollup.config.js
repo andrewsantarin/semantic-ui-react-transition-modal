@@ -59,7 +59,7 @@ export default [
   {
     input: input,
     output: {
-      file: "example/src/react-auto-controlled/index.js",
+      file: "example/src/semantic-ui-react-transition-modal/index.js",
       format: "es",
       banner: "/* eslint-disable */",
       sourcemap: true
