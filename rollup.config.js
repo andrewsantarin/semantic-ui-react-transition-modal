@@ -8,39 +8,15 @@ import typescript from "rollup-plugin-typescript2";
 
 import pkg from "./package.json";
 
+const input = "src/index.ts";
+const external = Object.keys(pkg.peerDependencies || {});
 
-export default {
-  input: "src/index.ts",
-  output: [
-    {
-      file: pkg.main,
-      format: 'cjs',
-      exports: 'named',
-      sourcemap: true,
-    },
-    {
-      file: pkg.module,
-      format: 'es',
-      exports: 'named',
-      sourcemap: true,
-    },
-    {
-      file: pkg.umd,
-      format: 'umd',
-      name: 'semanticUIReactTransitionModal',
-      globals: {
-        react: 'React',
-        'semantic-ui-react': 'semanticUIReact',
-      },
-    },
-    {
-      file: 'example/src/semantic-ui-react-transition-modal/index.js',
-      format: 'es',
-      banner: '/* eslint-disable */',
-    },
-  ],
-  external: Object.keys(pkg.peerDependencies || {}),
-  plugins: [
+function createPlugins({
+  useSizeSnapshot
+} = {
+    useSizeSnapshot: false,
+  }) {
+  const plugins = [
     peerDepsExternal(),
     nodeResolve(),
     babel({
@@ -50,7 +26,45 @@ export default {
       include: ["node_modules/**"]
     }),
     typescript(),
-    sourcemaps(),
-    sizeSnapshot()
-  ]
-};
+    sourcemaps()
+  ];
+
+  useSizeSnapshot && plugins.push(sizeSnapshot());
+
+  return plugins;
+}
+
+export default [
+  {
+    input: input,
+    output: [
+      {
+        file: pkg.main,
+        format: "cjs",
+        exports: "named",
+        sourcemap: true
+      },
+      {
+        file: pkg.module,
+        format: "es",
+        exports: "named",
+        sourcemap: true
+      }
+    ],
+    external: external,
+    plugins: createPlugins({
+      useSizeSnapshot: true,
+    })
+  },
+  {
+    input: input,
+    output: {
+      file: "example/src/react-auto-controlled/index.js",
+      format: "es",
+      banner: "/* eslint-disable */",
+      sourcemap: true
+    },
+    external: external,
+    plugins: createPlugins(),
+  }
+];
