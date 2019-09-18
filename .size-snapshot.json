@@ -1,10 +1,10 @@
 {
-  "dist/index.cjs.js": {
+  "dist\\index.cjs.js": {
     "bundled": 80340,
     "minified": 31829,
     "gzipped": 8767
   },
-  "dist/index.esm.js": {
+  "dist\\index.esm.js": {
     "bundled": 79934,
     "minified": 31469,
     "gzipped": 8730,

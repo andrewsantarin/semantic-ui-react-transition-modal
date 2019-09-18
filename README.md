@@ -2,16 +2,17 @@
 ## Semantic UI React Transition Modal
 A simple animation wrapper over the Semantic UI React modal component.
 
-- [Semantic UI React Transition Modal](#Semantic-UI-React-Transition-Modal)
-- [Premise](#Premise)
-- [Usage](#Usage)
-- [API](#API)
-- [Resources](#Resources)
+- [Semantic UI React Transition Modal](#semantic-ui-react-transition-modal)
+- [Premise](#premise)
+- [Usage](#usage)
+- [API](#api)
+- [Resources](#resources)
 
 ## Premise
 Without an official modal animation feature set in stone by Semantic UI React (see [this issue](https://github.com/Semantic-Org/Semantic-UI-React/issues/2923)), one has to make workarounds. This library aims to fill that in by merging the animation props of the `<Transition>` component and the visibility state control props of the `<Modal>` component into one convenient set.
 
 ## Usage
+[![react-auto-controlled](https://nodei.co/npm/react-auto-controlled.png)](https://npmjs.org/package/react-auto-controlled)
 
 **NPM**
 ```
